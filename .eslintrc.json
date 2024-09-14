@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "@rocketseat/eslint-config/node"
+    // "plugin:vitest-globals/recommended"
+  ],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest"
+  },
+  "plugins": ["simple-import-sort", "import"],
+  "rules": {
+    "no-useless-constructor": "off",
+    "no-new": "off",
+    "simple-import-sort/exports": "error",
+    "import/first": "error",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "simple-import-sort/imports": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "semi": true
+      }
+    ]
+  }
+  // "env": {
+  //   "vitest-globals/env": true
+  // }
+}
