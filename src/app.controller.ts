@@ -16,7 +16,7 @@ export class AppController {
   }
 
   @Get('protected')
-  getProtected(): string {
+  getProtected(): { message: string } {
     return this.keycloakService.getProtected();
   }
 }

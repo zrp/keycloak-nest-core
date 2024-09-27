@@ -14,6 +14,7 @@ services:
         condition: service_healthy
     volumes:
       - ./src:/app/src
+      - ./libs/keycloak-nest-core:/app/libs/keycloak-nest-core
 
   db:
     container_name: postgres
