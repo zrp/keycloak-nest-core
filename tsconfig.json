@@ -6,6 +6,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "composite": true,
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
@@ -19,8 +20,9 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@/*": ["src/*"],
-      "@root/*": ["./*"]
-    },
-    // "types": ["vitest/globals"]
+      "@root/*": ["./*"],
+      "@app/keycloak-nest-core": ["libs/keycloak-nest-core/src"],
+      "@app/keycloak-nest-core/*": ["libs/keycloak-nest-core/src/*"]
+    }
   }
 }

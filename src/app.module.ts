@@ -1,3 +1,4 @@
+import { KeycloakNestCoreModule } from '@app/keycloak-nest-core';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
@@ -12,6 +13,7 @@ import { EnvModule } from './shared/env/env.module';
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
     }),
+    KeycloakNestCoreModule,
     EnvModule,
   ],
   controllers: [AppController],
