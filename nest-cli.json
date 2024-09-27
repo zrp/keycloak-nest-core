@@ -3,6 +3,18 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true
+  },
+  "projects": {
+    "keycloak-nest-core": {
+      "type": "library",
+      "root": "libs/keycloak-nest-core",
+      "entryFile": "index",
+      "sourceRoot": "libs/keycloak-nest-core/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/keycloak-nest-core/tsconfig.lib.json"
+      }
+    }
   }
 }

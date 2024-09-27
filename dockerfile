@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install
+RUN yarn
 
 # Bundle app source
 COPY . .
@@ -17,10 +17,10 @@ COPY . .
 RUN npx prisma generate
 
 # Creates a "dist" folder with the production build
-RUN npm run build
+RUN yarn run build
 
 # Expose the port on which the app will run
 EXPOSE 3333
 
 # Deploy the migrations & Start the server using the production build
-CMD npx prisma migrate deploy && npm run start:prod
+CMD npx prisma migrate deploy && yarn run start:prod
