@@ -1,0 +1,76 @@
+name: Publish Library to NPM
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write # to be able to publish a GitHub release
+  issues: write # to be able to comment on released issues
+  pull-requests: write # to be able to comment on released pull requests
+  id-token: write # to enable use of OIDC for npm provenance
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.9.0'  
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+  security:
+    name: Security Check
+    runs-on: ubuntu-latest
+    needs: [lint]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.9.0'  
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check vulnerabilities with npm audit
+        run: npm audit --audit-level=moderate
+
+  release:
+    name: Release and Publish to NPM
+    runs-on: ubuntu-latest
+    needs: [security]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.9.0'
+        registry-url: https://registry.npmjs.org/
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build project
+      run: npm run build:lib
+
+    - name: Run semantic release
+      run: npx semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,18 @@
+# Excluir pastas desnecessárias
+node_modules/
+src/
+test/
+coverage/
+.vscode/
+prisma/
+scripts/
+.dockerignore
+.env*
+.eslintignore
+.eslintrc.json
+tsconfig*
+docker*
+nest-cli.json
+.husku
+.commitlint.config.js
+..releaserc
