@@ -1,6 +1,6 @@
 {
   "name": "keycloak-nest-core",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A NestJS library for KC",
   "author": "",
   "private": false,
