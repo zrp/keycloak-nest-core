@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/zrp/keycloak-nest-core/compare/v1.0.0...v1.1.0) (2024-10-11)
+
+
+### Features
+
+* **npm:** test npm version ([caea101](https://github.com/zrp/keycloak-nest-core/commit/caea1011a7f247cfd513e5306c3bf8c1584cc147))
+
 # 1.0.0 (2024-10-11)
 
 
