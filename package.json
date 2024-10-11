@@ -1,8 +1,8 @@
 {
   "name": "keycloak-nest-core",
   "version": "1.0.0",
-  "description": "A NestJS library for KC",
-  "author": "",
+  "description": "A NestJS library for Keycloak",
+  "author": "ZRP",
   "private": false,
   "license": "MIT",
   "publishConfig": {
