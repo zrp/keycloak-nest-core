@@ -10,15 +10,21 @@ export class KncConnectProvider {
     return {
       provide: KEYCLOAK_INSTANCE,
       useFactory: (kncOptions: KeycloakConnectConfig) => {
-        const keycloakInstance = new KeycloakConnect({}, kncOptions as any)
+        try {
+          const keycloakInstance = new KeycloakConnect({}, kncOptions as any)
 
-        // TODO: implement this
-        // keycloak.accessDenied = (req: any, res: any, next: any) => {
-        //   req.resourceDenied = true;
-        //   next();
-        // };
+          // TODO: implement this
+          // keycloak.accessDenied = (req: any, res: any, next: any) => {
+          //   req.resourceDenied = true;
+          //   next();
+          // };
 
-        return keycloakInstance
+          console.log('Keycloak instance initialized!')
+
+          return keycloakInstance
+        } catch (error) {
+          console.error('Error initializing Keycloak instance', error)
+        }
       },
       inject: [KEYCLOAK_OPTIONS],
     }

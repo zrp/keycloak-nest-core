@@ -15,6 +15,7 @@ services:
     volumes:
       - ./src:/app/src
       - ./libs/keycloak-nest-core:/app/libs/keycloak-nest-core
+      - ./node_modules:/app/node_modules
 
   db:
     container_name: postgres
@@ -30,7 +31,7 @@ services:
       - ./data/pg:/data/postgres
       - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 5s
       timeout: 5s
       retries: 5
@@ -61,4 +62,3 @@ services:
       interval: 5s
       timeout: 15s
       retries: 5
-
