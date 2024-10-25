@@ -3,8 +3,7 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
-    "webpack": true
+    "deleteOutDir": true
   },
   "projects": {
     "keycloak-nest-core": {

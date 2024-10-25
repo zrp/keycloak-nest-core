@@ -1,9 +1,29 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "declaration": true,
-    "outDir": "../../dist/libs/keycloak-nest-core"
+    "target": "ES2020",                           // Atualizado para ES2020
+    "module": "CommonJS",                         // CommonJS permanece, pois geralmente é usado no Node.js
+    "lib": ["ES2020"],                            // Atualização das bibliotecas para ES2020
+    "declaration": true,                          // Continua gerando arquivos de declaração (.d.ts)
+    "declarationMap": true,                       // Continua gerando mapas para os arquivos de declaração
+    "sourceMap": true,                            // Gera mapas de fontes (.map)
+    "outDir": "../../dist",                       // Definição de saída para 'dist' ao invés de '../../dist'
+    "rootDir": "./src",                           // Diretório raiz continua sendo 'src'
+    "strict": true,                               // Modo estrito ativo, uma boa prática
+    "noImplicitAny": true,                        // Definir 'noImplicitAny' para true para maior segurança
+    "strictNullChecks": true,                     // Ativar verificações estritas de nulidade
+    "forceConsistentCasingInFileNames": true,     // Garantir consistência de letras maiúsculas/minúsculas nos nomes dos arquivos
+    "skipLibCheck": true,                         // Ignorar a verificação de tipos nas dependências, para melhorar a velocidade de compilação
+    "allowSyntheticDefaultImports": true,         // Permitir importações padrão sintéticas
+    "esModuleInterop": true,                      // Continuar permitindo interoperabilidade ES6 com módulos CommonJS
+    "emitDecoratorMetadata": true,                // Emissão de metadados para decoradores
+    "experimentalDecorators": true,               // Decoradores experimentais ativados
+    "moduleResolution": "node",                   // Resolução de módulos como no Node.js
+    "resolveJsonModule": true,                    // Permite importação de módulos JSON
+    "isolatedModules": true,                      // Melhora a segurança em projetos que usam Babel ou SWC
+    "incremental": true,                          // Compilação incremental para melhorar a performance
+    "types": ["node"]                             // Definir os tipos globais, como o Node
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
+
