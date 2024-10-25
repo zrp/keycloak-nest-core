@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "composite": true,
-    "target": "ES2021",
+    "target": "es2022",
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
+    "strict": true,
+    "strictNullChecks": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
@@ -23,6 +22,7 @@
       "@root/*": ["./*"],
       "@app/keycloak-nest-core": ["libs/keycloak-nest-core/src"],
       "@app/keycloak-nest-core/*": ["libs/keycloak-nest-core/src/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   }
 }
