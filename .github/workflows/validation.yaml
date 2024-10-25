@@ -15,36 +15,60 @@ jobs:
   lint:
     name: Lint Code
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20.9.0'  
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
+
+      - name: Install dependencies
+        run: pnpm ci
 
       - name: Run ESLint
-        run: npm run lint
+        run: pnpm lint
 
   security:
     name: Security Check
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
     needs: [lint]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: '20.9.0'  
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
+
+      - name: Install dependencies
+        run: pnpm ci
 
       - name: Check vulnerabilities with npm audit
-        run: npm audit --audit-level=moderate
+        run: pnpm audit --audit-level=moderate
