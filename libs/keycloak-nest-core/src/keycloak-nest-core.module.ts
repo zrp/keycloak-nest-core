@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common'
 
-import { KeycloakNestCoreService } from './keycloak-nest-core.service';
+import { KeycloakNestCoreService } from './keycloak-nest-core.service'
 
 @Module({
   providers: [KeycloakNestCoreService],
