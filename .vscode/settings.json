@@ -1,5 +1,13 @@
 {
+  "conventionalCommits.scopes": [
+    "core",
+    "lint",
+    "infra",
+    "domain"
+  ],
   "cSpell.words": [
+    "commitlint",
+    "dinero",
     "keycloak"
   ]
 }
