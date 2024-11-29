@@ -6,6 +6,7 @@ import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { envSchema } from './shared/env/env'
 import { EnvModule } from './shared/env/env.module'
+import { UsersModule } from './users/users.module'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { EnvModule } from './shared/env/env.module'
       },
     }),
     EnvModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
