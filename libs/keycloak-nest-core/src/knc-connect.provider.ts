@@ -1,32 +1,41 @@
-import { Injectable, Provider } from '@nestjs/common'
-import KeycloakConnect from 'keycloak-connect'
+const KeycloakConnect = require('keycloak-connect');
+import { Provider } from '@nestjs/common';
 
-import { KEYCLOAK_INSTANCE, KEYCLOAK_OPTIONS } from './protocols/keys'
-import { KeycloakConnectConfig } from './protocols/knc-options.type'
+import { KNC_INSTANCE, KNC_OPTIONS } from './protocols/keys';
+import { KeycloakConnectConfig } from './protocols/knc-options.type';
+import { Keycloak } from 'keycloak-connect';
 
-@Injectable()
-export class KncConnectProvider {
-  static getKeycloakConnect(): Provider {
-    return {
-      provide: KEYCLOAK_INSTANCE,
-      useFactory: (kncOptions: KeycloakConnectConfig) => {
-        try {
-          const keycloakInstance = new KeycloakConnect({}, kncOptions as any)
+export const createKncOptionProvider = (
+  opts: KeycloakConnectConfig,
+  config?: any,
+) => {
+  return {
+    provide: KNC_OPTIONS,
+    useValue: Object.assign({}, opts, config),
+  };
+};
 
-          // TODO: implement this
-          // keycloak.accessDenied = (req: any, res: any, next: any) => {
-          //   req.resourceDenied = true;
-          //   next();
-          // };
+export const KncProvider: Provider = {
+  provide: KNC_INSTANCE,
+  useFactory: async (kncOptions: KeycloakConnectConfig) => {
+    try {
+      const keycloakInstance: Keycloak = new KeycloakConnect(
+        {},
+        kncOptions as any,
+      );
 
-          console.log('Keycloak instance initialized!')
+      // TODO: implement this
+      // keycloak.accessDenied = (req: any, res: any, next: any) => {
+      //   req.resourceDenied = true;
+      //   next();
+      // };
 
-          return keycloakInstance
-        } catch (error) {
-          console.error('Error initializing Keycloak instance', error)
-        }
-      },
-      inject: [KEYCLOAK_OPTIONS],
+      console.log('Keycloak instance initialized!');
+
+      return keycloakInstance;
+    } catch (error) {
+      console.error('Error initializing Keycloak instance', error);
     }
-  }
-}
+  },
+  inject: [KNC_OPTIONS],
+};

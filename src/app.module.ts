@@ -1,12 +1,14 @@
-import { KncModule } from '@app/keycloak-nest-core'
-import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { KncModule, AuthGuard } from '@app/keycloak-nest-core';
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
-import { envSchema } from './shared/env/env'
-import { EnvModule } from './shared/env/env.module'
-import { UsersModule } from './users/users.module'
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { envSchema } from './shared/env/env';
+import { EnvModule } from './shared/env/env.module';
+import { UsersModule } from './users/users.module';
+import { PrismaService } from './shared/env/services/prisma.service';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -16,16 +18,24 @@ import { UsersModule } from './users/users.module'
     }),
     KncModule.register({
       authServerUrl: 'http://localhost:8080',
-      realm: 'nest-example',
-      clientId: 'nest-api',
+      realm: 'knc-realm',
+      clientId: 'knc-client',
       credentials: {
-        secret: '05c1ff5e-f9ba-4622-98e3-c4c9d280546e',
+        secret: '91qrRt1FU75jqLd3QfETZkmUDWK4OEyf',
       },
     }),
     EnvModule,
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    PrismaService,
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+  ],
+  exports: [PrismaService],
 })
 export class AppModule {}
