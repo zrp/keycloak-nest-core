@@ -1,13 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
-import { KeycloakNestCoreService } from '@root/libs/keycloak-nest-core/src';
+import { Controller, Get, Inject } from '@nestjs/common';
+import { KncService } from '@root/libs/keycloak-nest-core/src';
 
 import { AppService } from './app.service';
+import { KNC_INSTANCE } from '@root/libs/keycloak-nest-core/src/protocols/keys';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly keycloakService: KeycloakNestCoreService,
+    @Inject(KNC_INSTANCE)
+    private readonly keycloakService: KncService,
   ) {}
 
   @Get()
