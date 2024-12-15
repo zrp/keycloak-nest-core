@@ -1,24 +1,26 @@
 import {
-  Injectable,
   CanActivate,
-  Inject,
   ExecutionContext,
+  Inject,
+  Logger,
   UnauthorizedException,
-} from '@nestjs/common';
-import KeycloakConnect from 'keycloak-connect';
-import { KNC_INSTANCE } from '../protocols/keys';
-import { Observable } from 'rxjs';
+} from '@nestjs/common'
 
-@Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
-    @Inject(KNC_INSTANCE)
-    private singleTenant: KeycloakConnect.Keycloak,
+    @Inject(Logger)
+    private readonly logger: Logger
   ) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    return true;
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest()
+    const token = request.headers['authorization']
+
+    if (!token) {
+      this.logger.error('No token provided')
+      throw new UnauthorizedException()
+    }
+
+    return true
   }
 }

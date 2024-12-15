@@ -1,8 +1,7 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Logger, Module } from '@nestjs/common'
 
-import { KncService } from './knc.service';
-import { createKncOptionProvider, KncProvider } from './knc-connect.provider';
-import { KeycloakConnectConfig } from './protocols/knc-options.type';
+import { createKncOptionProvider, KncProvider } from './knc-connect.provider'
+import { KeycloakConnectConfig } from './protocols/knc-options.type'
 
 @Module({})
 export class KncModule {
@@ -10,13 +9,13 @@ export class KncModule {
     const keycloakConnectProviders = [
       createKncOptionProvider(options, config),
       KncProvider,
-      KncService,
-    ];
+      Logger,
+    ]
 
     return {
       module: KncModule,
       providers: keycloakConnectProviders,
       exports: keycloakConnectProviders,
-    };
+    }
   }
 }

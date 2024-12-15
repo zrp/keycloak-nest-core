@@ -24,4 +24,4 @@ RUN npm run build:lib
 EXPOSE 3333
 
 # Deploy the migrations & Start the server using the production build
-CMD npx prisma migrate deploy && npm run start:dev
+CMD npx prisma migrate deploy && npm run dev
