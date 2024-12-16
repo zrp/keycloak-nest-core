@@ -1,4 +1,4 @@
-import { KeycloakNestCoreModule } from '@app/keycloak-nest-core'
+import { AppModule } from '@app/keycloak-nest-core'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 
@@ -12,7 +12,7 @@ import { HttpModule } from './http/http.module'
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
     }),
-    KeycloakNestCoreModule,
+    AppModule,
     EnvModule,
     HttpModule,
   ],

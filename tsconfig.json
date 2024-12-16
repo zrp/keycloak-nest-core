@@ -20,8 +20,8 @@
     "paths": {
       "@/*": ["src/*"],
       "@root/*": ["./*"],
-      "@app/keycloak-nest-core": ["libs/keycloak-nest-core/src"],
-      "@app/keycloak-nest-core/*": ["libs/keycloak-nest-core/src/*"]
+      "@app/keycloak-nest-core": ["libs/keycloak-nest-core/src/infra"],
+      "@app/keycloak-nest-core/*": ["libs/keycloak-nest-core/src/infra/*"]
     },
     "types": ["vitest/globals"]
   }

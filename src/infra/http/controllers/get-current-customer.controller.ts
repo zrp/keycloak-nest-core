@@ -23,8 +23,6 @@ export class GetCurrentCustomerController {
       cpf: param,
     })
 
-    console.log(result)
-
     if (result.isLeft()) {
       throw new BadRequestException()
     }

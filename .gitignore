@@ -132,3 +132,6 @@ data
 
 # Mac OS
 .DS_Store
+
+# IDEs
+.idea/
