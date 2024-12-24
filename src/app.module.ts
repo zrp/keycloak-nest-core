@@ -18,11 +18,11 @@ import { HttpModule } from '@nestjs/axios'
       isGlobal: true,
     }),
     KncModule.register({
-      authServerUrl: 'http://localhost:8080',
-      realm: 'knc-realm',
-      clientId: 'knc-client',
+      authServerUrl: 'http://keycloak:8080/auth',
+      realm: 'KNC',
+      clientId: 'keycloak-nest-core',
       credentials: {
-        secret: '91qrRt1FU75jqLd3QfETZkmUDWK4OEyf',
+        secret: 'pAWDwJxpfSx5Kt9cGLUExynwk9cIakEw',
       },
     }),
     EnvModule,

@@ -6,7 +6,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common'
 import { KNC_INSTANCE } from '../protocols/keys'
-import { KncProvider } from '../knc-connect.provider'
 import { Keycloak } from 'keycloak-connect'
 import { KNC_SKIP_AUTH } from '../decorators/public-route.decorator'
 import { Reflector } from '@nestjs/core'

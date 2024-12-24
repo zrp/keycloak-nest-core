@@ -28,7 +28,6 @@ export class AppController {
   }
 
   @Post('login')
-  @PublicRoute()
   login(@Body() body: LoginRequestDto) {
     return this.appService.login(body)
   }
