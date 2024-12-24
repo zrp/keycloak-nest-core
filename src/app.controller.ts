@@ -11,6 +11,7 @@ import {
 import { AppService } from './app.service'
 import { LoginRequestDto } from './protocols/login.request.dto'
 import { PublicRoute } from '@app/keycloak-nest-core'
+
 @Controller()
 @UseInterceptors(ClassSerializerInterceptor)
 export class AppController {

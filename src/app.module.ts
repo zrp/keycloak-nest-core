@@ -9,6 +9,7 @@ import { EnvModule } from './shared/env/env.module'
 import { UsersModule } from './users/users.module'
 import { PrismaService } from './shared/env/services/prisma.service'
 import { APP_GUARD } from '@nestjs/core'
+import { HttpModule } from '@nestjs/axios'
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { APP_GUARD } from '@nestjs/core'
     }),
     EnvModule,
     UsersModule,
+    HttpModule,
   ],
   controllers: [AppController],
   providers: [
