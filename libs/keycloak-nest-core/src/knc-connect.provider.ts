@@ -4,6 +4,7 @@ import { Provider } from '@nestjs/common'
 import { KNC_INSTANCE, KNC_LOGIN, KNC_OPTIONS } from './protocols/keys'
 import { KeycloakConnectConfig } from './protocols/knc-options.type'
 import { Keycloak } from 'keycloak-connect'
+import { HttpService } from '@nestjs/axios'
 
 export const createKncOptionProvider = (
   opts: KeycloakConnectConfig,
@@ -36,19 +37,6 @@ export const KncProvider: Provider = {
     } catch (error) {
       console.error('Error initializing Keycloak instance', error)
     }
-  },
-  inject: [KNC_OPTIONS],
-}
-
-export const KncLoginProvider: Provider = {
-  provide: KNC_LOGIN,
-  useFactory: async (kncOptions: KeycloakConnectConfig) => {
-    const keycloakInstance: Keycloak = new KeycloakConnect(
-      {},
-      kncOptions as any
-    )
-
-    return keycloakInstance.login
   },
   inject: [KNC_OPTIONS],
 }
