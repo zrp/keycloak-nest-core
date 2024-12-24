@@ -5,9 +5,8 @@ import {
   Logger,
   UnauthorizedException,
 } from '@nestjs/common'
-import { KNC_INSTANCE } from '../protocols/keys'
+import { KNC_INSTANCE, KNC_SKIP_AUTH } from '../protocols/keys'
 import { Keycloak } from 'keycloak-connect'
-import { KNC_SKIP_AUTH } from '../decorators/public-route.decorator'
 import { Reflector } from '@nestjs/core'
 
 export class AuthGuard implements CanActivate {
@@ -24,7 +23,7 @@ export class AuthGuard implements CanActivate {
       KNC_SKIP_AUTH,
       context.getHandler()
     )
-    return isPublic
+    return !!isPublic
   }
 
   private extractJwt(headers: { [key: string]: string }) {
