@@ -15,4 +15,5 @@ export interface KeycloakConnectConfig {
   verifyTokenAudience?: boolean
   confidentialPort?: string | number
   sslRequired?: string
+  tokenDataProperty?: string
 }

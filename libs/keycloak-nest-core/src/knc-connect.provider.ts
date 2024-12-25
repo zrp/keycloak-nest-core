@@ -19,7 +19,6 @@ export const createKncOptionProvider = (
 export const KncProvider: Provider = {
   provide: KNC_INSTANCE,
   useFactory: async (kncOptions: KeycloakConnectConfig) => {
-    console.log('🚀 ~ useFactory: ~ kncOptions:', kncOptions)
     try {
       const keycloakInstance: Keycloak = new KeycloakConnect(
         {},

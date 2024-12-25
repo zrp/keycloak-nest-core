@@ -5,9 +5,11 @@ import {
   Logger,
   UnauthorizedException,
 } from '@nestjs/common'
-import { KNC_INSTANCE, KNC_SKIP_AUTH } from '../protocols/keys'
+import { KNC_INSTANCE, KNC_OPTIONS, KNC_SKIP_AUTH } from '../protocols/keys'
 import { Keycloak } from 'keycloak-connect'
 import { Reflector } from '@nestjs/core'
+import { KncContentToken, KncToken } from '../protocols/knc-content-token.type'
+import { KeycloakConnectConfig } from '../protocols/knc-options.type'
 
 export class AuthGuard implements CanActivate {
   constructor(
@@ -15,6 +17,8 @@ export class AuthGuard implements CanActivate {
     private readonly logger: Logger,
     @Inject(KNC_INSTANCE)
     private readonly keycloak: Keycloak,
+    @Inject(KNC_OPTIONS)
+    private readonly kncOptions: KeycloakConnectConfig,
     private readonly reflector: Reflector
   ) {}
 
@@ -42,16 +46,20 @@ export class AuthGuard implements CanActivate {
     return auth[1]
   }
 
-  async validateKeycloakToken(token: any) {
+  async validateKeycloakToken(token: any): Promise<KncContentToken> {
     try {
-      await this.keycloak.grantManager.createGrant({ access_token: token })
+      const result = (await this.keycloak.grantManager.createGrant({
+        access_token: token,
+      })) as unknown as KncToken
+
+      return result.access_token.content
     } catch (error) {
       this.logger.error(error)
       throw new UnauthorizedException()
     }
   }
 
-  async validateToken(context: ExecutionContext) {
+  async validateToken(context: ExecutionContext): Promise<KncContentToken> {
     const request = context.switchToHttp().getRequest()
     const token = this.extractJwt(request.headers)
 
@@ -60,7 +68,15 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException()
     }
 
-    await this.validateKeycloakToken(token)
+    const result = await this.validateKeycloakToken(token)
+
+    return result
+  }
+
+  injectContentToken(context: ExecutionContext, contentToken: KncContentToken) {
+    const tokenData = this.kncOptions.tokenDataProperty || 'tokenData'
+    const request = context.switchToHttp().getRequest()
+    request[tokenData] = contentToken
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -70,7 +86,8 @@ export class AuthGuard implements CanActivate {
       return true
     }
 
-    await this.validateToken(context)
+    const contentToken = await this.validateToken(context)
+    this.injectContentToken(context, contentToken)
 
     return true
   }
