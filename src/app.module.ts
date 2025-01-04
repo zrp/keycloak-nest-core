@@ -1,6 +1,6 @@
 import { KncModule, AuthGuard } from '@app/keycloak-nest-core'
 import { Logger, Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -17,12 +17,15 @@ import { HttpModule } from '@nestjs/axios'
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
     }),
-    KncModule.register({
-      authServerUrl: 'http://keycloak:8080/auth',
-      realm: 'KNC',
-      clientId: 'keycloak-nest-core',
-      credentials: {
-        secret: 'pAWDwJxpfSx5Kt9cGLUExynwk9cIakEw',
+    KncModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          realm: configService.getOrThrow('KEYCLOAK_REALM'),
+          serverUrl: configService.getOrThrow('KEYCLOAK_SERVER_URL'),
+          clientId: configService.getOrThrow('KEYCLOAK_CLIENT_ID'),
+          secret: configService.getOrThrow('KEYCLOAK_CLIENT_SECRET'),
+        }
       },
     }),
     EnvModule,

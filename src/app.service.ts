@@ -23,10 +23,12 @@ export class AppService {
   async login(body: LoginRequestDto) {
     try {
       const response = await this.httpService.axiosRef.post(
-        `${this.configService.getOrThrow('AUTH_SERVER_URL_TOKEN')}/protocol/openid-connect/token`,
+        `${this.configService.getOrThrow('KEYCLOAK_AUTH_SERVER_URL_TOKEN')}/protocol/openid-connect/token`,
         {
-          client_id: this.configService.getOrThrow('CLIENT_ID'),
-          client_secret: this.configService.getOrThrow('CLIENT_SECRET'),
+          client_id: this.configService.getOrThrow('KEYCLOAK_CLIENT_ID'),
+          client_secret: this.configService.getOrThrow(
+            'KEYCLOAK_CLIENT_SECRET'
+          ),
           grant_type: 'password',
           scope: 'openid',
           username: body.username,
