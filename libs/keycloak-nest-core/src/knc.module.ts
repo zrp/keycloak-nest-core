@@ -50,8 +50,8 @@ export class KncModule {
     return [
       ...reqProviders,
       {
-        provide: options.useClass,
-        useClass: options.useClass,
+        provide: KNC_OPTIONS,
+        useClass: options.useClass!,
       },
     ];
   }
@@ -67,11 +67,19 @@ export class KncModule {
       };
     }
 
+    const injectToken = options.useExisting || options.useClass;
+
+    if (!injectToken) {
+      throw new Error(
+        'Invalid configuration. Either useFactory, useClass, or useExisting must be provided.',
+      );
+    }
+
     return {
       provide: KNC_OPTIONS,
       useFactory: async (optionsFactory: KncOptionsFactory) =>
         await optionsFactory.createKeycloakConnectOptions(),
-      inject: [options.useExisting || options.useClass],
+      inject: [injectToken],
     };
   }
 }
