@@ -1,12 +1,12 @@
-import { DynamicModule, Logger, Module, Provider } from '@nestjs/common'
+import { DynamicModule, Logger, Module, Provider } from '@nestjs/common';
 
-import { createKncOptionProvider, KncProvider } from './knc-connect.provider'
-import { KncConfig } from './protocols/knc-options.type'
+import { createKncOptionProvider, KncProvider } from './knc-connect.provider';
 import {
   KncModuleAsyncOptions,
   KncOptionsFactory,
-} from './protocols/async-options.type'
-import { KNC_OPTIONS } from './protocols/keys'
+} from './protocols/async-options.type';
+import { KNC_OPTIONS } from './protocols/keys';
+import { KncConfig } from './protocols/knc-options.type';
 
 @Module({})
 export class KncModule {
@@ -15,33 +15,36 @@ export class KncModule {
       createKncOptionProvider(options, config),
       KncProvider,
       Logger,
-    ]
+    ];
 
     return {
       module: KncModule,
       providers: keycloakConnectProviders,
       exports: keycloakConnectProviders,
-    }
+    };
   }
 
   static registerAsync(options: KncModuleAsyncOptions): DynamicModule {
-    const optsProvider = this.createAsyncProviders(options)
+    const optsProvider = this.createAsyncProviders(options);
 
     return {
       module: KncModule,
       imports: options.imports || [],
       providers: optsProvider,
       exports: optsProvider,
-    }
+    };
   }
 
   private static createAsyncProviders(
-    options: KncModuleAsyncOptions
+    options: KncModuleAsyncOptions,
   ): Provider[] {
-    const reqProviders = [this.createAsyncOptionsProvider(options), KncProvider]
+    const reqProviders = [
+      this.createAsyncOptionsProvider(options),
+      KncProvider,
+    ];
 
     if (options.useExisting || options.useFactory) {
-      return reqProviders
+      return reqProviders;
     }
 
     return [
@@ -50,18 +53,18 @@ export class KncModule {
         provide: options.useClass,
         useClass: options.useClass,
       },
-    ]
+    ];
   }
 
   private static createAsyncOptionsProvider(
-    options: KncModuleAsyncOptions
+    options: KncModuleAsyncOptions,
   ): Provider {
     if (options.useFactory) {
       return {
         provide: KNC_OPTIONS,
         useFactory: options.useFactory,
         inject: options.inject || [],
-      }
+      };
     }
 
     return {
@@ -69,6 +72,6 @@ export class KncModule {
       useFactory: async (optionsFactory: KncOptionsFactory) =>
         await optionsFactory.createKeycloakConnectOptions(),
       inject: [options.useExisting || options.useClass],
-    }
+    };
   }
 }

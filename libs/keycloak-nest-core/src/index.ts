@@ -1,6 +1,6 @@
-import { KncModule } from './knc.module'
-import { AuthGuard } from './guards/auth.guard'
-import { PublicRoute } from './decorators/public-route.decorator'
-import { AuthorizedClients } from './decorators/authorized-clients.decorator'
+import { AuthorizedClients } from './decorators/authorized-clients.decorator';
+import { PublicRoute } from './decorators/public-route.decorator';
+import { AuthGuard } from './guards/auth.guard';
+import { KncModule } from './knc.module';
 
-export { KncModule, AuthGuard, PublicRoute, AuthorizedClients }
+export { AuthGuard, AuthorizedClients, KncModule, PublicRoute };

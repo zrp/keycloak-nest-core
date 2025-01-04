@@ -1,23 +1,23 @@
+import { HttpService } from '@nestjs/axios';
 import {
   HttpException,
-  Inject,
   Injectable,
   InternalServerErrorException,
-} from '@nestjs/common'
-import { LoginRequestDto } from './protocols/login.request.dto'
-import { HttpService } from '@nestjs/axios'
-import { ConfigService } from '@nestjs/config'
-import { AxiosError } from 'axios'
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { AxiosError } from 'axios';
+
+import { LoginRequestDto } from './protocols/login.request.dto';
 
 @Injectable()
 export class AppService {
   constructor(
     private readonly httpService: HttpService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {}
 
   getHello(): string {
-    return 'Hello World!'
+    return 'Hello World!';
   }
 
   async login(body: LoginRequestDto) {
@@ -27,7 +27,7 @@ export class AppService {
         {
           client_id: this.configService.getOrThrow('KEYCLOAK_CLIENT_ID'),
           client_secret: this.configService.getOrThrow(
-            'KEYCLOAK_CLIENT_SECRET'
+            'KEYCLOAK_CLIENT_SECRET',
           ),
           grant_type: 'password',
           scope: 'openid',
@@ -38,16 +38,16 @@ export class AppService {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-        }
-      )
+        },
+      );
 
-      return response.data
+      return response.data;
     } catch (error) {
       if (error instanceof AxiosError) {
-        throw new HttpException(error.response?.data, error.response?.status)
+        throw new HttpException(error.response?.data, error.response?.status);
       }
 
-      throw new InternalServerErrorException('Error logging in')
+      throw new InternalServerErrorException('Error logging in');
     }
   }
 }

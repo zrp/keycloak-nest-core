@@ -1,17 +1,18 @@
-const KeycloakConnect = require('keycloak-connect')
-import { Provider } from '@nestjs/common'
+import { Provider } from '@nestjs/common';
+import { Keycloak } from 'keycloak-connect';
 
-import { KNC_INSTANCE, KNC_LOGIN, KNC_OPTIONS } from './protocols/keys'
-import { KncConfig } from './protocols/knc-options.type'
-import { Keycloak } from 'keycloak-connect'
-import { HttpService } from '@nestjs/axios'
+import { KNC_INSTANCE, KNC_OPTIONS } from './protocols/keys';
+import { KncConfig } from './protocols/knc-options.type';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const KeycloakConnect = require('keycloak-connect');
 
 export const createKncOptionProvider = (opts: KncConfig, config?: any) => {
   return {
     provide: KNC_OPTIONS,
     useValue: Object.assign({}, opts, config),
-  }
-}
+  };
+};
 
 export const KncProvider: Provider = {
   provide: KNC_INSTANCE,
@@ -19,8 +20,8 @@ export const KncProvider: Provider = {
     try {
       const keycloakInstance: Keycloak = new KeycloakConnect(
         {},
-        kncOptions as any
-      )
+        kncOptions as any,
+      );
 
       // TODO: implement this
       // keycloak.accessDenied = (req: any, res: any, next: any) => {
@@ -28,12 +29,12 @@ export const KncProvider: Provider = {
       //   next();
       // };
 
-      console.log('Keycloak instance initialized!')
+      console.log('Keycloak instance initialized!');
 
-      return keycloakInstance
+      return keycloakInstance;
     } catch (error) {
-      console.error('Error initializing Keycloak instance', error)
+      console.error('Error initializing Keycloak instance', error);
     }
   },
   inject: [KNC_OPTIONS],
-}
+};
