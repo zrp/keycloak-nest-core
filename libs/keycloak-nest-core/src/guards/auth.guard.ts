@@ -32,14 +32,14 @@ export class AuthGuard implements CanActivate {
 
   private extractJwt(headers: { [key: string]: string }) {
     if (headers && !headers.authorization) {
-      this.logger.error(`No authorization header`)
+      this.logger.error(`[KNC]: No authorization header`)
       throw new UnauthorizedException()
     }
 
     const auth = headers.authorization.split(' ')
 
     if (auth[0].toLowerCase() !== 'bearer') {
-      this.logger.error(`No bearer token provided`)
+      this.logger.error(`[KNC]: No bearer token provided`)
       throw new UnauthorizedException()
     }
 
@@ -54,7 +54,7 @@ export class AuthGuard implements CanActivate {
 
       return result.access_token.content
     } catch (error) {
-      this.logger.error(error)
+      this.logger.error(`[KNC]: ${error}`)
       throw new UnauthorizedException()
     }
   }
@@ -64,7 +64,7 @@ export class AuthGuard implements CanActivate {
     const token = this.extractJwt(request.headers)
 
     if (!token) {
-      this.logger.error('No token provided')
+      this.logger.error('[KNC]: No token provided')
       throw new UnauthorizedException()
     }
 
