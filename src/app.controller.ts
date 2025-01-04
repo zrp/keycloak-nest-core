@@ -28,8 +28,8 @@ export class AppController {
     return { message: 'Protected route' }
   }
 
-  @Post('login')
   @PublicRoute()
+  @Post('login')
   login(@Body() body: LoginRequestDto) {
     return this.appService.login(body)
   }
