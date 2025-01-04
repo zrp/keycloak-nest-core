@@ -1,4 +1,4 @@
-export interface KeycloakConnectConfig {
+export interface KncConfig {
   realm?: string
   resource?: string
   clientId?: string

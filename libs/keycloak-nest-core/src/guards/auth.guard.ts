@@ -9,7 +9,7 @@ import { KNC_INSTANCE, KNC_OPTIONS, KNC_SKIP_AUTH } from '../protocols/keys'
 import { Keycloak } from 'keycloak-connect'
 import { Reflector } from '@nestjs/core'
 import { KncContentToken, KncToken } from '../protocols/knc-content-token.type'
-import { KeycloakConnectConfig } from '../protocols/knc-options.type'
+import { KncConfig } from '../protocols/knc-options.type'
 
 export class AuthGuard implements CanActivate {
   constructor(
@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     @Inject(KNC_INSTANCE)
     private readonly keycloak: Keycloak,
     @Inject(KNC_OPTIONS)
-    private readonly kncOptions: KeycloakConnectConfig,
+    private readonly kncOptions: KncConfig,
     private readonly reflector: Reflector
   ) {}
 
