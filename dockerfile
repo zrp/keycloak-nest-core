@@ -22,6 +22,7 @@ RUN npm run build:lib
 
 # Expose the port on which the app will run
 EXPOSE 3333
+EXPOSE 9229
 
 # Deploy the migrations & Start the server using the production build
-CMD npx prisma migrate deploy && npm run start:dev
+CMD npx prisma migrate deploy && npm run dev

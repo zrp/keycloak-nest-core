@@ -1,14 +1,13 @@
-const KeycloakConnect = require('keycloak-connect');
 import { Provider } from '@nestjs/common';
-
-import { KNC_INSTANCE, KNC_OPTIONS } from './protocols/keys';
-import { KeycloakConnectConfig } from './protocols/knc-options.type';
 import { Keycloak } from 'keycloak-connect';
 
-export const createKncOptionProvider = (
-  opts: KeycloakConnectConfig,
-  config?: any,
-) => {
+import { KNC_INSTANCE, KNC_OPTIONS } from './protocols/keys';
+import { KncConfig } from './protocols/knc-options.type';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const KeycloakConnect = require('keycloak-connect');
+
+export const createKncOptionProvider = (opts: KncConfig, config?: any) => {
   return {
     provide: KNC_OPTIONS,
     useValue: Object.assign({}, opts, config),
@@ -17,7 +16,7 @@ export const createKncOptionProvider = (
 
 export const KncProvider: Provider = {
   provide: KNC_INSTANCE,
-  useFactory: async (kncOptions: KeycloakConnectConfig) => {
+  useFactory: async (kncOptions: KncConfig) => {
     try {
       const keycloakInstance: Keycloak = new KeycloakConnect(
         {},

@@ -1,16 +1,21 @@
-import { Controller, Get, Inject } from '@nestjs/common';
-import { KncService } from '@root/libs/keycloak-nest-core/src';
+import { AuthorizedClients, PublicRoute } from '@app/keycloak-nest-core';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  UseInterceptors,
+} from '@nestjs/common';
 
 import { AppService } from './app.service';
-import { KNC_INSTANCE } from '@root/libs/keycloak-nest-core/src/protocols/keys';
+import { LoginRequestDto } from './protocols/login.request.dto';
 
 @Controller()
+@UseInterceptors(ClassSerializerInterceptor)
+@AuthorizedClients(['keycloak-nest-core'])
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    @Inject(KNC_INSTANCE)
-    private readonly keycloakService: KncService,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get()
   getHello(): string {
@@ -19,6 +24,12 @@ export class AppController {
 
   @Get('protected')
   getProtected(): { message: string } {
-    return this.keycloakService.getProtected();
+    return { message: 'Protected route' };
+  }
+
+  @PublicRoute()
+  @Post('login')
+  login(@Body() body: LoginRequestDto) {
+    return this.appService.login(body);
   }
 }

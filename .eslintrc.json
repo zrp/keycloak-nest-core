@@ -11,6 +11,7 @@
   "rules": {
     "no-useless-constructor": "off",
     "no-new": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "simple-import-sort/exports": "error",
     "import/first": "error",
     "import/newline-after-import": "error",

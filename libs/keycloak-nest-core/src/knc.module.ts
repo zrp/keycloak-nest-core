@@ -1,22 +1,77 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Logger, Module, Provider } from '@nestjs/common';
 
-import { KncService } from './knc.service';
 import { createKncOptionProvider, KncProvider } from './knc-connect.provider';
-import { KeycloakConnectConfig } from './protocols/knc-options.type';
+import {
+  KncModuleAsyncOptions,
+  KncOptionsFactory,
+} from './protocols/async-options.type';
+import { KNC_OPTIONS } from './protocols/keys';
+import { KncConfig } from './protocols/knc-options.type';
 
 @Module({})
 export class KncModule {
-  static register(options: KeycloakConnectConfig, config?: any): DynamicModule {
+  static register(options: KncConfig, config?: any): DynamicModule {
     const keycloakConnectProviders = [
       createKncOptionProvider(options, config),
       KncProvider,
-      KncService,
+      Logger,
     ];
 
     return {
       module: KncModule,
       providers: keycloakConnectProviders,
       exports: keycloakConnectProviders,
+    };
+  }
+
+  static registerAsync(options: KncModuleAsyncOptions): DynamicModule {
+    const optsProvider = this.createAsyncProviders(options);
+
+    return {
+      module: KncModule,
+      imports: options.imports || [],
+      providers: optsProvider,
+      exports: optsProvider,
+    };
+  }
+
+  private static createAsyncProviders(
+    options: KncModuleAsyncOptions,
+  ): Provider[] {
+    const reqProviders = [
+      this.createAsyncOptionsProvider(options),
+      KncProvider,
+    ];
+
+    if (options.useExisting || options.useFactory) {
+      return reqProviders;
+    }
+
+    return [
+      ...reqProviders,
+      {
+        provide: options.useClass,
+        useClass: options.useClass,
+      },
+    ];
+  }
+
+  private static createAsyncOptionsProvider(
+    options: KncModuleAsyncOptions,
+  ): Provider {
+    if (options.useFactory) {
+      return {
+        provide: KNC_OPTIONS,
+        useFactory: options.useFactory,
+        inject: options.inject || [],
+      };
+    }
+
+    return {
+      provide: KNC_OPTIONS,
+      useFactory: async (optionsFactory: KncOptionsFactory) =>
+        await optionsFactory.createKeycloakConnectOptions(),
+      inject: [options.useExisting || options.useClass],
     };
   }
 }
