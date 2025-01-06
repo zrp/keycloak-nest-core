@@ -1,3 +1,14 @@
+# [1.2.0](https://github.com/zrp/keycloak-nest-core/compare/v1.1.0...v1.2.0) (2025-01-04)
+
+
+### Features
+
+* add AuthorizedClients decorator and interceptor for client authorization ([dd0bea5](https://github.com/zrp/keycloak-nest-core/commit/dd0bea5022210584804fdf7d7c180c7ced0c6d3c))
+* add more configurations to register app ([9874fd6](https://github.com/zrp/keycloak-nest-core/commit/9874fd634497a817a6cba0f284c368458d58f51c))
+* create register module ([2131ace](https://github.com/zrp/keycloak-nest-core/commit/2131aceae5ac81d6ec67ad29b5fed59fb6e5b9bb))
+* create register module ([11fd8d5](https://github.com/zrp/keycloak-nest-core/commit/11fd8d50c31ed74599e053cbe2d0c2610055a915))
+* integrate HTTP service for login functionality ([9ee5342](https://github.com/zrp/keycloak-nest-core/commit/9ee53429659d3216a255dfb96c3daae52596b95c))
+
 # [1.1.0](https://github.com/zrp/keycloak-nest-core/compare/v1.0.0...v1.1.0) (2024-10-11)
 
 
