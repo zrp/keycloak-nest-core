@@ -46,7 +46,7 @@ export class AuthorizedClientsInterceptor implements NestInterceptor {
   }
 }
 
-export const AuthorizedClients = (clients: [string]) =>
+export const AuthorizedClients = (clients: string[]) =>
   applyDecorators(
     SetMetadata(KNC_AUTHORIZED_CLIENTS, clients),
     UseInterceptors(AuthorizedClientsInterceptor),
