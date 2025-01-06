@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/zrp/keycloak-nest-core/compare/v1.2.0...v1.2.1) (2025-01-06)
+
+
+### Bug Fixes
+
+* **lock-file:** update lock files ([e4d3c4d](https://github.com/zrp/keycloak-nest-core/commit/e4d3c4dde7d50369fca1aaed7c256b2011d40ce9))
+
 # [1.2.0](https://github.com/zrp/keycloak-nest-core/compare/v1.1.0...v1.2.0) (2025-01-04)
 
 
